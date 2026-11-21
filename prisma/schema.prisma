@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../server/generated/prisma"
+  previewFeatures = ["relationJoins"]
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Dataset {
+  id         Int          @id @default(autoincrement())
+  name       String
+  source     String
+  simulation Boolean      @default(true)
+  revision   Int          @default(1)
+  rows       DatasetRow[]
+  studies    CaseStudy[]
+}
+
+model DatasetRow {
+  datasetId Int
+  month     String
+  channel   String
+  revenue   BigInt
+  visits    Int
+  orders    Int
+  dataset   Dataset @relation(fields: [datasetId], references: [id], onDelete: Cascade)
+
+  @@id([datasetId, month, channel])
+}
+
+model CaseStudy {
+  id        Int     @id @default(autoincrement())
+  slug      String  @unique
+  title     String
+  category  String
+  summary   String
+  question  String
+  method    String
+  findings  String
+  action    String
+  credit    String
+  published Boolean @default(false)
+  revision  Int     @default(1)
+  datasetId Int
+  dataset   Dataset @relation(fields: [datasetId], references: [id], onDelete: Restrict)
+
+  @@index([published, id])
+  @@index([datasetId])
+}
+
+model Admin {
+  id           Int    @id
+  email        String @unique
+  passwordHash String
+}
+
+model Session {
+  sid    String   @id @db.VarChar
+  sess   Json     @db.Json
+  expire DateTime @db.Timestamp(6)
+
+  @@index([expire])
+  @@map("session")
+}
