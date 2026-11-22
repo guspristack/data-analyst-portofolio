@@ -1,36 +1,29 @@
 # Dimas Pratama · Portofolio Analis Data
 
-Portofolio full-stack Dimas Pratama, persona fiktif dari Ruang Karya. Desain dasbor asli menggunakan palet biru, Inter, IBM Plex Mono, dan potret generatif dari galeri.
+Proyek portofolio full-stack untuk persona fiktif dari seri Ruang Karya karya GuspriStack.
 
-## Dashboard publik
+[Lihat demo desain di GuspriStack Showcase](https://showcase.guspriaman.com/portofolio/analitik/)
 
-- Pilih studi kasus yang sudah terbit, rentang bulan, dan kanal. Grafik dapat berpindah antara pendapatan, kunjungan, dan konversi.
-- Kartu KPI, grafik, tabel, dan ekspor CSV mengikuti filter yang sama. URL menyimpan filter aktif.
-- Konversi agregat dihitung dari total pesanan dibagi total kunjungan. Jika jumlah kunjungan nol, konversi ditampilkan sebagai —. Grafik memberi jeda ketika bulan atau nilai konversi tidak tersedia.
-- Studi contoh berisi 24 baris sintetis dari Januari–Juni 2026. Total bulanan berasal dari prototipe awal, dengan rincian kanal sintetis.
+## Fitur
 
-## Studio admin
+- Dasbor dengan filter periode dan kanal, grafik, tabel, dan ekspor CSV.
+- Pengelolaan dataset CSV dan penerbitan studi kasus.
 
-- Kelola metadata, sumber, dan penanda simulasi sebuah dataset. Unduh template, impor CSV, tinjau 10 baris pertama, dan unduh salinan dataset untuk disunting.
-- Buat draf studi kasus, kaitkan dataset, tulis metode, temuan, dan kredit, lalu terbitkan. Jadikan studi draf untuk menariknya dari galeri.
-- Dataset yang masih digunakan terlindung dari penghapusan. Impor mengganti seluruh data dalam satu transaksi dan langsung memperbarui studi publik terkait.
+## Teknologi
 
-### Format impor
+| Bagian | Teknologi |
+| --- | --- |
+| Bahasa | TypeScript, HTML, dan CSS |
+| Frontend | React, Vite, dan CSS Modules |
+| Backend | Node.js 24 dan Express |
+| Database | PostgreSQL dan Prisma ORM |
+| Impor data | csv-parse |
 
-CSV UTF-8 dengan koma, maksimum 1 MB dan 1.000 baris. Gunakan satu baris per kombinasi bulan dan kanal. Kanal yang didukung adalah `organic`, `paid`, `direct`, dan `referral`. Isi nilai bulat tanpa pemisah ribuan dan pastikan pesanan tidak melebihi kunjungan.
+## Coba secara lokal
 
-```csv
-bulan,kanal,pendapatan_rupiah,kunjungan,pesanan
-2026-01,organic,8640000,2960,71
-2026-01,paid,7920000,2220,77
-```
-
-## Menjalankan secara lokal
-
-Siapkan Node.js 24 dan PostgreSQL, lalu buat database. Salin `.env.example` ke `.env` dan isi `DATABASE_URL`, `SESSION_SECRET`, `ADMIN_EMAIL`, serta `ADMIN_PASSWORD`. Panjang kata sandi admin minimal 16 karakter. Gunakan hasil perintah pertama sebagai nilai `SESSION_SECRET`.
+Siapkan Node.js 24 dan database PostgreSQL lokal. Salin [.env.example](.env.example) ke `.env` dan isi koneksi database, rahasia sesi acak, serta kredensial admin lokal. Gunakan kata sandi admin dengan minimal 16 karakter.
 
 ```sh
-node -e "console.log(require('node:crypto').randomBytes(32).toString('hex'))"
 npm ci
 npm run db:migrate
 npm run db:seed
@@ -38,10 +31,16 @@ npm run admin:provision
 npm run dev
 ```
 
-Mode pengembangan berjalan di [portofolio lokal](http://127.0.0.1:5182/) dan [studio admin](http://127.0.0.1:5182/admin). Untuk hasil build lokal, atur `APP_ORIGIN=http://127.0.0.1:4182`, jalankan `npm run build`, lalu `npm start`.
-
-Frontend memakai React, Vite, TypeScript, dan CSS Modules. Express menyediakan API. PostgreSQL dan Prisma menyimpan dataset, studi kasus, akun admin, dan sesi.
+Buka [portofolio lokal](http://127.0.0.1:5182/) atau [panel admin](http://127.0.0.1:5182/admin). Simpan konfigurasi asli di `.env` dan data privat seperti ekspor database atau unggahan pribadi di luar repositori atau di folder `.local/`.
 
 ## Kredit
 
-Pengembangan oleh [guspriaman](https://github.com/guspriaman) untuk [guspriStack](https://github.com/guspristack). Desain asli, profil, dan contoh data berasal dari prototipe Ruang Karya.
+- Pemilik dan pengembang proyek — [guspriaman](https://guspriaman.com/).
+- Studio pengembang — [GuspriStack](https://github.com/guspristack).
+- Materi contoh dari prototipe Ruang Karya — Desain dasbor, potret generatif, dan dataset sintetis.
+
+## Lisensi
+
+Kode dan materi contoh orisinal milik guspriaman tersedia di bawah [PolyForm Noncommercial License 1.0.0](LICENSE). Anda boleh menggunakan, memodifikasi, dan membagikan materi tersebut untuk tujuan nonkomersial sesuai lisensi, dengan menyertakan [pemberitahuan hak cipta](NOTICE).
+
+Penjualan proyek atau versi modifikasinya, distribusi berbayar, dan penggunaan komersial memerlukan izin tertulis dari guspriaman. Dependensi dan aset pihak ketiga mengikuti lisensinya masing-masing.
